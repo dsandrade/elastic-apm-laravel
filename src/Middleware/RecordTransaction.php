@@ -88,7 +88,7 @@ class RecordTransaction
             $spanModel->setStacktrace($span['stacktrace']->toArray());
             $spanModel->startedAt($span['start']);
             $spanModel->stopedAt($span['duration']);
-            $spanModel->setContext($span['context']);
+            // $spanModel->setContext($span['context']);
             $this->agent->putEvent($spanModel);
         }
     }
