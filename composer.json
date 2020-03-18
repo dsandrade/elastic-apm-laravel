@@ -16,7 +16,7 @@
       "illuminate/http":"^6.0",
       "illuminate/routing":"^6.0",
       "illuminate/support":"^6.0",
-      "dsandrade/elastic-apm-php-agent":">=6.5.3",
+      "dsandrade/elastic-apm-php-agent":"^7.1",
       "ramsey/uuid":"^3.0"
    },
    "require-dev":{  
@@ -27,11 +27,11 @@
          "type":"package",
          "package": {
             "name": "dsandrade/elastic-apm-php-agent",
-            "version":"master",
+            "version":"^7.1",
             "source": {
                "url": "https://github.com/dsandrade/elastic-apm-php-agent.git",
                "type": "git",
-               "reference":"master"
+               "reference":"^7.1"
             }
          }
       }
