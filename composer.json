@@ -27,11 +27,11 @@
          "type":"package",
          "package": {
             "name": "dsandrade/elastic-apm-php-agent",
-            "version":"^7.1",
+            "version":"7.1.0",
             "source": {
                "url": "https://github.com/dsandrade/elastic-apm-php-agent.git",
                "type": "git",
-               "reference":"^7.1"
+               "reference":"7.1.0"
             }
          }
       }
