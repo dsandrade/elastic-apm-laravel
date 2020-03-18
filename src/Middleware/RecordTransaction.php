@@ -3,9 +3,9 @@
 namespace PhilKra\ElasticApmLaravel\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Log;
 use PhilKra\Agent;
 use PhilKra\Helper\Timer;
+use Illuminate\Support\Facades\Log;
 
 class RecordTransaction
 {
@@ -64,7 +64,7 @@ class RecordTransaction
             'type' => 'HTTP'
         ]);
 
-        $transaction->setSpans(app('query-log')->toArray());
+        $this->setSpans($transaction, app('query-log')->toArray());
 
         if (config('elastic-apm.transactions.use_route_uri')) {
             $transaction->setTransactionName($this->getRouteUriTransactionName($request));
@@ -73,6 +73,24 @@ class RecordTransaction
         $transaction->stop($this->timer->getElapsedInMilliseconds());
 
         return $response;
+    }
+
+    /**
+     * @param $transaction
+     * @param $spans
+     */
+    public function setSpans(&$transaction, $spans)
+    {
+        foreach ($spans as $span) {
+            $spanModel = $this->agent->factory()->newSpan($span['name'], $transaction);
+            $spanModel->setType($span['type']);
+            $spanModel->setAction(collect(explode('.', $span['type']))->last());
+            $spanModel->setStacktrace($span['stacktrace']->toArray());
+            $spanModel->startedAt($span['start']);
+            $spanModel->stopedAt($span['duration']);
+            $spanModel->setContext($span['context']);
+            $this->agent->putEvent($spanModel);
+        }
     }
 
     /**
